@@ -1,0 +1,11 @@
+<%= erb :_nav %>
+<h2> Edit Post </h2>
+</br>
+<form action="/posts/<%= @post.id %>" method="post" id="edit_post">
+  Title:</br><input type="text" name="title" value="<%= @post.title %>"></br></br>
+  Tags:</br><input type="text" name="tags" value="<%= show_tags(@post) %>"> comma separated</br></br>
+  Content:</br><input type="textarea" name="body" value="<%= @post.body %>"></br></br>
+  <input type="submit" value="Save Post">
+  <a href="/posts/<%= @post.id %>" />Cancel</a>
+</form>
+

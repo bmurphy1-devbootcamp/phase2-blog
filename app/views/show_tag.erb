@@ -1,0 +1,6 @@
+<%= erb :_nav %>
+<h2>Tag: <%= @tag.name %></h2>
+<ul><% @tag.posts.each do |post| %>
+  <li><a href="/posts/<%=post.id%>"><%= post.title %></a></li>
+    <% end %>
+  </ul>

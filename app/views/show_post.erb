@@ -1,7 +1,18 @@
+<%= erb :_nav %>
 <header>
   <h2> <%= @post.title %> </h2>
 </header>
 <div class="body">
+  <div class="tags">
+    <%= show_tags(@post) %>
+  </div>
   <section>
     <p> <%= @post.body %> </p>
-  </section>
+  </section></br></br>
+  <form action="/posts/<%= @post.id %>/edit" method="put" id="edit_post">
+    <input type="submit" value="Edit Post">
+  </form></br>
+
+  <form action="/posts/<%= @post.id %>/delete" method="post" id="delete_post">
+    <input type="submit" value="Delete Post">
+  </form>

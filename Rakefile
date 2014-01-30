@@ -116,6 +116,24 @@ namespace :db do
   task :version do
     puts "Current version: #{ActiveRecord::Migrator.current_version}"
   end
+
+  desc "Drop DB, create DB, migrate it, seed it"
+    task :yolo do
+      # drop DB
+      puts "Dropping database #{DB_NAME}..."
+      exec("dropdb #{DB_NAME}")
+      # create DB
+      puts "Creating database #{DB_NAME} if it doesn't exist..."
+      exec("createdb #{DB_NAME}")
+      # migrate it
+      ActiveRecord::Migrator.migrations_paths << File.dirname(__FILE__) + 'db/migrate'
+      ActiveRecord::Migration.verbose = ENV["VERBOSE"] ? ENV["VERBOSE"] == "true" : true
+      ActiveRecord::Migrator.migrate(ActiveRecord::Migrator.migrations_paths, ENV["VERSION"] ? ENV["VERSION"].to_i : nil) do |migration|
+      ENV["SCOPE"].blank? || (ENV["SCOPE"] == migration.scope)
+      # seed it
+      require APP_ROOT.join('db', 'seeds.rb')
+    end
+  end
 end
 
 desc 'Start IRB with application environment loaded'

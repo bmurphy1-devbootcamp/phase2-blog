@@ -10,7 +10,7 @@ end
 post '/posts/new' do
   p params[:post]
   @post = Post.create(title: params[:title], body: params[:body])
-  if @post.valid?
+  if @post.errors.any?
     redirect '/posts/new/error'
   end
   if params[:tags]
@@ -19,6 +19,9 @@ post '/posts/new' do
   redirect "/posts/#{@post.id}"
 end
 
+get '/posts/new/error' do
+  erb :post_new_error
+end
 
 post '/posts/:id/delete' do
   @post = Post.find(params[:id])

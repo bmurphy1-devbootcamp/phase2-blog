@@ -11,7 +11,7 @@ post '/posts/new' do
   p params[:post]
   @post = Post.create(title: params[:title], body: params[:body])
   if @post.errors.any?
-    redirect '/posts/new/error'
+    redirect "/posts/new/error?error=#{@post.errors.full_messages.first}"
   end
   if params[:tags]
     @post.tags << string_to_tag_objects(params[:tags])
